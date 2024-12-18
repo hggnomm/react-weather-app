@@ -68,6 +68,31 @@ const WeatherApp = () => {
       setLocation("");
     }
   };
+
+  const currentDate = new Date();
+
+  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fir", "Sat"];
+
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const dayOfWeek = daysOfWeek[currentDate.getDay()];
+  const month = months[currentDate.getMonth()];
+  const dayOfMonth = currentDate.getDate();
+
+  const formattedDate = `${dayOfWeek}, ${dayOfMonth}, ${month}`;
   return (
     <div className="container" style={{ backgroundImage }}>
       <div
@@ -107,7 +132,7 @@ const WeatherApp = () => {
           </div>
         </div>
         <div className="weather-date">
-          <p>Fri, 3 May</p>
+          <p>{formattedDate}</p>
         </div>
         <div className="weather-data">
           <div className="humidity">
