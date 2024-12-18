@@ -154,3 +154,8 @@
   font-size: 2rem;
   color: #2f2e57;
 }
+
+.loader {
+  width: 5rem;
+  margin-top: 10rem;
+}

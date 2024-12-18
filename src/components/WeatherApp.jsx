@@ -4,19 +4,23 @@ import sunny from "../assets/sunny.png";
 import cloudy from "../assets/cloudy.png";
 import rainy from "../assets/rainy.png";
 import snowy from "../assets/snowy.png";
+import loadingGif from "../assets/loading.gif";
 
 const WeatherApp = () => {
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
+  const [loading, setLoading] = useState(false);
   const api_key = import.meta.env.VITE_API_KEY_OPEN_WEATHER_MAP;
 
   useEffect(() => {
     const fetchDefaultWeather = async () => {
+      setLoading(true);
       const defaultLocation = "Vietnam";
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${defaultLocation}&units=Metric&appid=${api_key}`;
       const res = await fetch(url);
       const defaultData = await res.json();
       setData(defaultData);
+      setLoading(false);
     };
 
     fetchDefaultWeather();
@@ -58,6 +62,7 @@ const WeatherApp = () => {
     : "linear-gradient(to right, #f3b07c, #fcd283)";
 
   const search = async () => {
+    setLoading(true)
     if (location.trim() !== "") {
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=Metric&appid=${api_key}`;
 
@@ -69,6 +74,7 @@ const WeatherApp = () => {
         setData(searchData);
         setLocation("");
       }
+      setLoading(false);
     }
   };
 
@@ -123,7 +129,9 @@ const WeatherApp = () => {
             <i onClick={search} className="fa-solid fa-magnifying-glass"></i>
           </div>
         </div>
-        {data.notFound ? (
+        {loading ? (
+          <img className="loader" src={loadingGif} alt="loading"></img>
+        ) : data.notFound ? (
           <div className="not-found">Not found!</div>
         ) : (
           <>
