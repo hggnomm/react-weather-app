@@ -63,9 +63,12 @@ const WeatherApp = () => {
 
       const res = await fetch(url);
       const searchData = await res.json();
-
-      setData(searchData);
-      setLocation("");
+      if (searchData.cod !== 200) {
+        setData({ notFound: true });
+      } else {
+        setData(searchData);
+        setLocation("");
+      }
     }
   };
 
@@ -120,32 +123,38 @@ const WeatherApp = () => {
             <i onClick={search} className="fa-solid fa-magnifying-glass"></i>
           </div>
         </div>
-        <div className="weather">
-          <img src={weatherImage} alt="sunny" />
-          <div className="weather-type">
-            {data.weather ? data.weather[0]?.main : null}
-          </div>
-          <div className="temp">
-            {data.main && data.main.temp
-              ? `${Math.floor(data.main.temp)}°`
-              : null}
-          </div>
-        </div>
-        <div className="weather-date">
-          <p>{formattedDate}</p>
-        </div>
-        <div className="weather-data">
-          <div className="humidity">
-            <div className="data-name">Humidity</div>
-            <i className="fa-solid fa-droplet"></i>
-            <div className="data">{data.main?.humidity}%</div>
-          </div>
-          <div className="wind">
-            <div className="data-name">Wind</div>
-            <i className="fa-solid fa-wind"></i>
-            <div className="data">{data.wind?.speed} km/h</div>
-          </div>
-        </div>
+        {data.notFound ? (
+          <div className="not-found">Not found!</div>
+        ) : (
+          <>
+            <div className="weather">
+              <img src={weatherImage} alt="sunny" />
+              <div className="weather-type">
+                {data.weather ? data.weather[0]?.main : null}
+              </div>
+              <div className="temp">
+                {data.main && data.main.temp
+                  ? `${Math.floor(data.main.temp)}°`
+                  : null}
+              </div>
+            </div>
+            <div className="weather-date">
+              <p>{formattedDate}</p>
+            </div>
+            <div className="weather-data">
+              <div className="humidity">
+                <div className="data-name">Humidity</div>
+                <i className="fa-solid fa-droplet"></i>
+                <div className="data">{data.main?.humidity}%</div>
+              </div>
+              <div className="wind">
+                <div className="data-name">Wind</div>
+                <i className="fa-solid fa-wind"></i>
+                <div className="data">{data.wind?.speed} km/h</div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
