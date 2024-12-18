@@ -92,7 +92,7 @@ const WeatherApp = () => {
   const month = months[currentDate.getMonth()];
   const dayOfMonth = currentDate.getDate();
 
-  const formattedDate = `${dayOfWeek}, ${dayOfMonth}, ${month}`;
+  const formattedDate = `${dayOfWeek}, ${dayOfMonth} ${month}`;
   return (
     <div className="container" style={{ backgroundImage }}>
       <div
